@@ -1,0 +1,27 @@
+{
+  "name": "trivia-translator-api",
+  "version": "1.0.0",
+  "description": "API pour obtenir des questions de quiz en anglais et français",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "trivia",
+    "quiz",
+    "api",
+    "translation"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
