@@ -1,8 +1,14 @@
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors');
 require('dotenv').config();
 
-const router = express.Router();
+// Créer l'application Express directement au lieu d'un router
+const app = express();
+
+// Middleware
+app.use(express.json());
+app.use(cors());
 
 // Fonction pour traduire un texte via MyMemory
 async function translateText(text) {
@@ -156,7 +162,8 @@ async function fetchTriviaQuestion() {
     }
 }
 
-router.get('/', async (req, res) => {
+// Route principale
+app.get('/api/trivia', async (req, res) => {
     try {
         const triviaData = await fetchTriviaQuestion();
         res.json({ 
@@ -175,9 +182,20 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Route racine pour vérifier que l'API fonctionne
+app.get('/', (req, res) => {
+    res.json({ message: 'API de quiz trivia en anglais et français. Utilisez /api/trivia pour obtenir une question.' });
+});
+
 // Route 404 pour les chemins non trouvés
-router.use((req, res) => {
+app.use((req, res) => {
     res.status(404).json({ error: 'Route non trouvée' });
 });
 
-module.exports = router;
+// Définir le port depuis les variables d'environnement ou utiliser 3000 par défaut
+const PORT = process.env.PORT || 3000;
+
+// Démarrer le serveur
+app.listen(PORT, () => {
+    console.log(`Serveur démarré sur le port ${PORT}`);
+});
